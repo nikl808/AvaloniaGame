@@ -20,5 +20,6 @@ namespace AvaloniaUi
                 .WithInterFont()
                 .LogToTrace()
                 .UseReactiveUI();
+
     }
 }

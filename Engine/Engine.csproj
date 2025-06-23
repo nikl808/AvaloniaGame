@@ -4,10 +4,55 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<AssemblyName>Engine</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Locations\FarmFields.png" />
+    <None Remove="Images\Locations\Farmhouse.png" />
+    <None Remove="Images\Locations\HerbalistsGarden.png" />
+    <None Remove="Images\Locations\HerbalistsHut.png" />
+    <None Remove="Images\Locations\SpiderForest.png" />
+    <None Remove="Images\Locations\TownGate.png" />
+    <None Remove="Images\Locations\TownSquare.png" />
+    <None Remove="Images\Locations\Trader.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\Locations\FarmFields.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ApplicationDefinition>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.1" />
     <PackageReference Include="ReactiveUI" Version="20.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AvaloniaResource Include="Images\Locations\Farmhouse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Locations\HerbalistsGarden.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Locations\HerbalistsHut.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Locations\Home.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Locations\SpiderForest.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Locations\TownGate.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Locations\TownSquare.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Locations\Trader.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+  </ItemGroup>
 </Project>
