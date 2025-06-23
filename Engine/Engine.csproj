@@ -8,28 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\Locations\FarmFields.png" />
-    <None Remove="Images\Locations\Farmhouse.png" />
-    <None Remove="Images\Locations\HerbalistsGarden.png" />
-    <None Remove="Images\Locations\HerbalistsHut.png" />
-    <None Remove="Images\Locations\SpiderForest.png" />
-    <None Remove="Images\Locations\TownGate.png" />
-    <None Remove="Images\Locations\TownSquare.png" />
-    <None Remove="Images\Locations\Trader.png" />
+	<PackageReference Include="Avalonia" Version="11.3.1" />
+	<PackageReference Include="ReactiveUI" Version="20.3.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ApplicationDefinition Include="Images\Locations\FarmFields.png">
+    <AvaloniaResource Include="Images\Locations\FarmFields.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ApplicationDefinition>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.1" />
-    <PackageReference Include="ReactiveUI" Version="20.3.1" />
-  </ItemGroup>
-
-  <ItemGroup>
+    </AvaloniaResource>
     <AvaloniaResource Include="Images\Locations\Farmhouse.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AvaloniaResource>

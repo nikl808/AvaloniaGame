@@ -13,32 +13,9 @@ public class GameSessionViewModel : ViewModelBase
     public Location? CurrentLocation 
     { 
         get => _currentLocation; 
-        set {
-            this.RaiseAndSetIfChanged(ref _currentLocation, value);
-            this.RaisePropertyChanged("HasLocationToNorth");
-            this.RaisePropertyChanged("HasLocationToEast");
-            this.RaisePropertyChanged("HasLocationToSouth");
-            this.RaisePropertyChanged("HasLocationToWest");
-        }
+        set => this.RaiseAndSetIfChanged(ref _currentLocation, value);
     }
     public World CurrentWorld { get; set; }
-
-    public bool HasLocationToNorth
-    {
-        get => MoveToLocation(CurrentLocation?.XCoordinate, CurrentLocation?.YCoordinate + 1) != null;
-    }
-    public bool HasLocationToEast
-    {
-        get => MoveToLocation(CurrentLocation?.XCoordinate + 1, CurrentLocation?.YCoordinate) != null;
-    }
-    public bool HasLocationToSouth
-    {
-        get => MoveToLocation(CurrentLocation?.XCoordinate, CurrentLocation?.YCoordinate - 1) != null;
-    }
-    public bool HasLocationToWest
-    {
-        get => MoveToLocation(CurrentLocation?.XCoordinate - 1, CurrentLocation?.YCoordinate) != null;
-    }
 
     public ReactiveCommand<Unit, Unit> MoveNorthCommand {get; }
     public ReactiveCommand<Unit, Unit> MoveWestCommand { get; }
@@ -47,34 +24,45 @@ public class GameSessionViewModel : ViewModelBase
 
     public GameSessionViewModel()
     {
-        CurrentPlayer = new();
-        CurrentPlayer.Name = "Scott";
-        CurrentPlayer.CharacterClass = "Fighter";
-        CurrentPlayer.HitPoints = 10;
-        CurrentPlayer.Gold = 100000;
-        CurrentPlayer.ExpPoints = 0;
-        CurrentPlayer.Level = 1;
-
-        WorldFactory factory = new();
-        CurrentWorld = factory.CreateWorld();
+        CurrentPlayer = new()
+        {
+            Name = "Scott",
+            CharacterClass = "Fighter",
+            HitPoints = 10,
+            Gold = 100000,
+            ExpPoints = 0,
+            Level = 1
+        };
+        
+        CurrentWorld = WorldFactory.CreateWorld();
         CurrentLocation = CurrentWorld.LocationAt(0, 0);
 
-        MoveNorthCommand = ReactiveCommand.Create(MoveNorth);
-        MoveWestCommand = ReactiveCommand.Create(MoveWest);
-        MoveEastCommand = ReactiveCommand.Create(MoveEast);
-        MoveSouthCommand = ReactiveCommand.Create(MoveSouth);
+        var moveToNorth = this.WhenAnyValue(loc => loc.CurrentLocation, 
+            loc => MoveToLocation(loc?.XCoordinate, loc?.YCoordinate + 1) != null);
+        var moveToSouth = this.WhenAnyValue(loc => loc.CurrentLocation,
+            loc => MoveToLocation(loc?.XCoordinate, loc?.YCoordinate - 1) != null);
+        var moveToWest = this.WhenAnyValue(loc => loc.CurrentLocation,
+            loc => MoveToLocation(loc?.XCoordinate - 1, loc?.YCoordinate) != null);
+        var moveToEast = this.WhenAnyValue(loc => loc.CurrentLocation,
+            loc => MoveToLocation(loc?.XCoordinate + 1, loc?.YCoordinate) != null);
+
+        MoveNorthCommand = ReactiveCommand.Create(MoveNorth, moveToNorth);
+        MoveWestCommand = ReactiveCommand.Create(MoveWest, moveToWest);
+        MoveEastCommand = ReactiveCommand.Create(MoveEast, moveToEast);
+        MoveSouthCommand = ReactiveCommand.Create(MoveSouth, moveToSouth);
     }
 
     private void MoveNorth() =>
         CurrentLocation = MoveToLocation(CurrentLocation?.XCoordinate, CurrentLocation?.YCoordinate + 1);
 
     private void MoveWest() =>
-        CurrentLocation = MoveToLocation(CurrentLocation?.XCoordinate + 1, CurrentLocation?.YCoordinate );
-
+        CurrentLocation = MoveToLocation(CurrentLocation?.XCoordinate - 1, CurrentLocation?.YCoordinate );
+    
     private void MoveEast() =>
-        CurrentLocation = MoveToLocation(CurrentLocation?.XCoordinate , CurrentLocation?.YCoordinate - 1);
+        CurrentLocation = MoveToLocation(CurrentLocation?.XCoordinate + 1 , CurrentLocation?.YCoordinate );
+    
     private void MoveSouth() =>
-        CurrentLocation = MoveToLocation(CurrentLocation?.XCoordinate - 1, CurrentLocation?.YCoordinate);
+        CurrentLocation = MoveToLocation(CurrentLocation?.XCoordinate, CurrentLocation?.YCoordinate-1);
     
     private Location? MoveToLocation(int? xCoordinate, int? yCoordinate) => CurrentWorld.LocationAt(xCoordinate, yCoordinate);
 }
