@@ -1,0 +1,39 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Engine.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaUi.Views.MainWindow"
+        x:DataType="vm:GameSessionViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Avalonia test RPG" Width="1024" Height="768">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:GameSessionViewModel/>
+    </Design.DataContext>
+
+	<Grid RowDefinitions="Auto,*,225" ColumnDefinitions="250,*">
+		<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="AliceBlue" Content="Menu"/>
+		<Grid Grid.Row="1" Grid.Column="0" Background="Aquamarine" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto">
+			<Label Grid.Row="0" Grid.Column="0" Content="Name:"/>
+			<Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentPlayer.Name}"/>
+			<Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
+			<Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentPlayer.CharacterClass}"/>
+			<Label Grid.Row="2" Grid.Column="0" Content="HitPoints"/>
+			<Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentPlayer.HitPoints}"/>
+			<Label Grid.Row="3" Grid.Column="0" Content="Gold:"/>
+			<Label Grid.Row="3" Grid.Column="1" Content="{Binding CurrentPlayer.Gold}"/>
+			<Label Grid.Row="4" Grid.Column="0" Content="XP:"/>
+			<Label Grid.Row="4" Grid.Column="1" Content="{Binding CurrentPlayer.ExpPoints}"/>
+			<Label Grid.Row="5" Grid.Column="0" Content="Level"/>
+			<Label Grid.Row="5" Grid.Column="1" Content="{Binding CurrentPlayer.Level}"/>
+			<Button Grid.Row="6" Grid.Column="1" Content="Add XP" Command="{Binding AddXPCommand}"/>
+		</Grid>
+		<Label Grid.Row="1" Grid.Column="1" Content="Game Data" Background="Beige"/>
+		<Label Grid.Row="2" Grid.Column="0" Content="Inventory/Quests" Background="BurlyWood"/>
+		<Label Grid.Row="2" Grid.Column="1" Content="Combat/Movement Controls" Background="Lavender"/>
+	</Grid>
+</Window>
