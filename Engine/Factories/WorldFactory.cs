@@ -31,6 +31,8 @@ internal static class WorldFactory
         world.AddLocation(0, 1, "Herbalist's hut",
             "You see a small hut, with plants drying from the roof.",
             "Engine/Images/Locations/HerbalistsHut.png");
+        var q = QuestFactory.GetQuestById(1);
+        world.LocationAt(0, 1)?.QuestsAvailableHere.Add(q);
         world.AddLocation(0, 2, "Herbalist's garden",
             "There are many plants here, with snakes hiding behind them.",
             "Engine/Images/Locations/HerbalistsGarden.png");

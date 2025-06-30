@@ -13,7 +13,10 @@ public class GameSessionViewModel : ViewModelBase
     public Location? CurrentLocation 
     { 
         get => _currentLocation; 
-        set => this.RaiseAndSetIfChanged(ref _currentLocation, value);
+        set {
+            this.RaiseAndSetIfChanged(ref _currentLocation, value);
+            GivePlayerQuestsAtLocation();
+        }
     }
     public World CurrentWorld { get; set; }
 
@@ -36,7 +39,7 @@ public class GameSessionViewModel : ViewModelBase
         
         CurrentWorld = WorldFactory.CreateWorld();
         CurrentLocation = CurrentWorld.LocationAt(0, 0);
-
+       
         var moveToNorth = this.WhenAnyValue(loc => loc.CurrentLocation, 
             loc => MoveToLocation(loc?.XCoordinate, loc?.YCoordinate + 1) != null);
         var moveToSouth = this.WhenAnyValue(loc => loc.CurrentLocation,
@@ -65,4 +68,18 @@ public class GameSessionViewModel : ViewModelBase
         CurrentLocation = MoveToLocation(CurrentLocation?.XCoordinate, CurrentLocation?.YCoordinate-1);
     
     private Location? MoveToLocation(int? xCoordinate, int? yCoordinate) => CurrentWorld.LocationAt(xCoordinate, yCoordinate);
+
+    private void GivePlayerQuestsAtLocation()
+    {
+        if (CurrentLocation is not null)
+        {
+            foreach (var quest in CurrentLocation.QuestsAvailableHere)
+            {
+                if (!CurrentPlayer.Quests.Any(q => q.PlayerQuest.Id == quest?.Id)) 
+                {
+                    if(quest is not null) CurrentPlayer.Quests.Add(new QuestStatus(quest));
+                }   
+            }
+        }
+    }
 }

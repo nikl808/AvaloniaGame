@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using System.Collections.ObjectModel;
 
 namespace Engine.Models;
 
@@ -10,6 +11,9 @@ public class Player : ReactiveObject
     private int _expPoints;
     private int _level;
     private int _gold;
+
+    public ObservableCollection<GameItem> Inventory { get; set; } = [];
+    public ObservableCollection<QuestStatus> Quests { get; set; } = [];
 
     public string? Name 
     {

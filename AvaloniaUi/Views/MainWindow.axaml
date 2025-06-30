@@ -47,7 +47,29 @@
 				</Grid>
 			</Border>
 		</Grid>
-		<Label Grid.Row="2" Grid.Column="0" Content="Inventory/Quests" Background="BurlyWood"/>
+		
+		<TabControl Grid.Row="2" Grid.Column="0" Background="BurlyWood">
+			<TabItem Header="Inventory" FontSize="13">
+			<DataGrid ItemsSource="{Binding CurrentPlayer.Inventory}"
+						  AutoGenerateColumns="False"
+                          HeadersVisibility="Column" Background="AliceBlue">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Description" Binding="{Binding Name}" Width="*"/>
+					<DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="Auto"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			</TabItem>
+			<TabItem Header="Quests" FontSize="13">
+				<DataGrid ItemsSource="{Binding CurrentPlayer.Quests}"
+						  AutoGenerateColumns="False"
+                          HeadersVisibility="Column" Background="AliceBlue">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Name" Binding="{Binding PlayerQuest.Name}" Width="*"/>
+						<DataGridTextColumn Header="Done?" Binding="{Binding IsCompleted}" Width="Auto"/>
+					</DataGrid.Columns>
+				</DataGrid>
+			</TabItem>
+		</TabControl>
 		<Grid Grid.Row="2" Grid.Column="1" RowDefinitions="*" ColumnDefinitions="*,255" Background="Lavender">
 			<Grid Grid.Row="0" Grid.Column="1" RowDefinitions="*,*,*" ColumnDefinitions="*,*,*">
 				<Button Grid.Row="0" Grid.Column="1" Height="30" Width="57" Margin="10" 
