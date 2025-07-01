@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converter="using:AvaloniaUi.Converters"
+		xmlns:avrtb="using:AvRichTextBox"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaUi.Views.MainWindow"
         x:DataType="vm:GameSessionViewModel"
@@ -13,7 +14,7 @@
 	<Window.Resources>
 		<converter:StringToBitmapConverter x:Key="StringToBitmapConverter"/>
 	</Window.Resources>
-	
+		
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
@@ -21,7 +22,9 @@
     </Design.DataContext>
 
 	<Grid RowDefinitions="Auto,*,225" ColumnDefinitions="250,*">
+		<!--Menu-->
 		<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="AliceBlue" Content="Menu"/>
+		<!--Player stats-->
 		<Grid Grid.Row="1" Grid.Column="0" Background="Aquamarine" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto">
 			<Label Grid.Row="0" Grid.Column="0" Content="Name:"/>
 			<Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentPlayer.Name}"/>
@@ -36,7 +39,13 @@
 			<Label Grid.Row="5" Grid.Column="0" Content="Level"/>
 			<Label Grid.Row="5" Grid.Column="1" Content="{Binding CurrentPlayer.Level}"/>
 		</Grid>
+		<!--Gameplay-->
 		<Grid RowDefinitions="*,*" ColumnDefinitions="3*, 2*" Grid.Row="1" Grid.Column="1" Background="Beige">
+			<!--Game Messages-->
+			<Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" BorderBrush="Gainsboro" BorderThickness="1">
+				<avrtb:RichTextBox x:Name="GameMessages" Background="Beige" Focusable="False"/>
+			</Border>
+			<!--Location information-->
 			<Border Grid.Row="0" Grid.Column="1" BorderBrush="Gainsboro" BorderThickness="1">
 				<Grid RowDefinitions="Auto,*,Auto">
 					<TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="{Binding CurrentLocation.Name}"/>
@@ -46,8 +55,23 @@
 							   Text="{Binding CurrentLocation.Description}"/>
 				</Grid>
 			</Border>
+			<!--Monster information-->
+			<Border Grid.Row="1" Grid.Column="1" BorderBrush="Gainsboro" BorderThickness="1">
+				<Grid RowDefinitions="Auto,*,Auto">
+					<TextBlock Grid.Row="0"
+                               HorizontalAlignment="Center"
+                               Text="{Binding CurrentMonster.Name}" />
+					<Image Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="125" Width="125"
+						   Source="{Binding CurrentMonster.Image, Converter={StaticResource StringToBitmapConverter}}"/>
+					<StackPanel Grid.Row="2" IsVisible="{Binding HasMonster}" HorizontalAlignment="Center" Orientation="Horizontal">
+						<TextBlock>Current Hit Points:</TextBlock>
+						<TextBlock Text="{Binding CurrentMonster.HitPoints}"/>
+					</StackPanel>
+
+				</Grid>
+			</Border>
 		</Grid>
-		
+		<!--Inventory/Quests-->
 		<TabControl Grid.Row="2" Grid.Column="0" Background="BurlyWood">
 			<TabItem Header="Inventory" FontSize="13">
 			<DataGrid ItemsSource="{Binding CurrentPlayer.Inventory}"
@@ -70,12 +94,27 @@
 				</DataGrid>
 			</TabItem>
 		</TabControl>
+		<!--Actions-->
 		<Grid Grid.Row="2" Grid.Column="1" RowDefinitions="*" ColumnDefinitions="*,255" Background="Lavender">
+			<!--Combat-->
+			<Grid Grid.Row="0" Grid.Column="0" RowDefinitions="Auto,Auto" ColumnDefinitions="150,10,50"
+				  IsVisible="{Binding HasMonster}" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<ComboBox Grid.Row="0" Grid.Column="0" 
+						  ItemsSource="{Binding CurrentPlayer.Weapons}" 
+						  SelectedItem="{Binding CurrentWeapon}"
+						  DisplayMemberBinding="{Binding Name}"
+						  SelectedValueBinding="{Binding ItemTypeId}"/>
+				<Button Grid.Row="0" Grid.Column="2" Content="Use" Command="{Binding AttackMonsterCommand}"/>
+			</Grid>
+			<!--Movement-->
 			<Grid Grid.Row="0" Grid.Column="1" RowDefinitions="*,*,*" ColumnDefinitions="*,*,*">
 				<Button Grid.Row="0" Grid.Column="1" Height="30" Width="57" Margin="10" 
 						Command="{Binding MoveNorthCommand}" Content="North"/>
 				<Button Grid.Row="1" Grid.Column="0" Height="30" Width="57" Margin="10" 
 						Command="{Binding MoveWestCommand}" Content="West"/>
+				<Button Grid.Row="1" Grid.Column="1"
+					   Height="30" Width="65" Margin="10" Command="{Binding TradeCommand}"
+					   Content="Trade"/>
 				<Button Grid.Row="1" Grid.Column="2" Height="30" Width="57" Margin="10" 
 						Command="{Binding MoveEastCommand}" Content="East"/>
 				<Button Grid.Row="2" Grid.Column="1" Height="30" Width="57" Margin="10" 

@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Monsters\GiantSpider.png" />
+    <None Remove="Images\Monsters\Rat.png" />
+    <None Remove="Images\Monsters\Snake.png" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<PackageReference Include="Avalonia" Version="11.3.2" />
 	<PackageReference Include="ReactiveUI" Version="20.4.1" />
   </ItemGroup>
@@ -38,6 +44,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AvaloniaResource>
     <AvaloniaResource Include="Images\Locations\Trader.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Monsters\GiantSpider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Monsters\Rat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Images\Monsters\Snake.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AvaloniaResource>
   </ItemGroup>

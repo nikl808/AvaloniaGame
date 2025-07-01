@@ -2,12 +2,12 @@
 
 public class ItemQuantity
 {
-    public int ItemID { get; set; }
+    public int ItemId { get; set; }
     public int Quantity { get; set; }
 
     public ItemQuantity(int itemId, int quantity)
     {
-        ItemID = itemId;
+        ItemId = itemId;
         Quantity = quantity;
     }
 }

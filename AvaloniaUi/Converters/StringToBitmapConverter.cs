@@ -10,7 +10,8 @@ internal class StringToBitmapConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value != null)
+        var imagePath = value as string;
+        if (!string.IsNullOrEmpty(imagePath))
         {
             var uri = new Uri($"avares://{value as string}");
             return new Bitmap(AssetLoader.Open(uri));

@@ -2,7 +2,7 @@
 
 public class World
 {
-    private List<Location> _locations = new();
+    private List<Location> _locations = [];
     internal void AddLocation(int xCoordinate, int yCoordinate, string name, string description, string image)
     {
         _locations.Add(new Location(){
@@ -10,7 +10,7 @@ public class World
                 YCoordinate = yCoordinate,
                 Name = name,
                 Description = description,
-                Image = image});
+                Image = string.IsNullOrEmpty(image)? string.Empty : $"Engine/Images/Locations/{image}"});
     }
 
     public Location? LocationAt(int? xCoordinate, int? yCoordinate)
